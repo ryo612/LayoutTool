@@ -27,38 +27,38 @@ void StoneFill2() {
 
   for (int i=0; i<6; i++) {
     boolean cd=true;
-    float px=0;
+    float pX=0;
     float py=0;
     if (i==0) {//left
-      px=mouseX-px(lensD+space);
+      pX=mouseX-px(lensD+space);
       py=mouseY;
     } else if (i==1) {//right
-      px=mouseX+px(lensD+space);
+      pX=mouseX+px(lensD+space);
       py=mouseY;
     } else if (i==2) {//upleft
-      px=mouseX-px((lensD+space)/2);
+      pX=mouseX-px((lensD+space)/2);
       py=mouseY-px((lensD+space)/2*sqrt(3));
     } else if (i==3) {//upright
-      px=mouseX+px((lensD+space)/2);
+      pX=mouseX+px((lensD+space)/2);
       py=mouseY-px((lensD+space)/2*sqrt(3));
     } else if (i==4) {//downleft
-      px=mouseX-px((lensD+space)/2);
+      pX=mouseX-px((lensD+space)/2);
       py=mouseY+px((lensD+space)/2*sqrt(3));
     } else {//downright
-      px=mouseX+px((lensD+space)/2);
+      pX=mouseX+px((lensD+space)/2);
       py=mouseY+px((lensD+space)/2*sqrt(3));
     }
     for (int j=0; j<Stones.size()-(i+1); j++) {
-      dS=dist(Stones.get(j).get(0), Stones.get(j).get(1), px, py);
+      dS=dist(Stones.get(j).get(0), Stones.get(j).get(1), pX, py);
       if (dS<px(Stones.get(j).get(5)/2.0+lensD/2.0)) {
         cd=false;
       }
     }
     if (cd) {
       noFill();
-      ellipse(px, py, px(lensD), px(lensD));
+      ellipse(pX, py, px(lensD), px(lensD));
       ArrayList<Float> Stone=new ArrayList<Float>();//一時保存
-      Stone.add(px);
+      Stone.add(pX);
       Stone.add(py);
       Stone.add(drawCount);//描画順
       Stone.add(0.0);//選択チェック
@@ -78,35 +78,35 @@ void StoneFill2() {
       int p=Stones.size()-plusstone+u-plus;
       for (int i=0; i<6; i++) {
         boolean cd=true;
-        float px=0;
+        float pX=0;
         float py=0;
 
         if (i==0) {//left
-          px=Stones.get(p).get(0)-px(lensD+space);
+          pX=Stones.get(p).get(0)-px(lensD+space);
           py=Stones.get(p).get(1);
         } else if (i==1) {//right
-          px=Stones.get(p).get(0)+px(lensD+space);
+          pX=Stones.get(p).get(0)+px(lensD+space);
           py=Stones.get(p).get(1);
         } else if (i==2) {//upleft
-          px=Stones.get(p).get(0)-px((lensD+space)/2);
+          pX=Stones.get(p).get(0)-px((lensD+space)/2);
           py=Stones.get(p).get(1)-px((lensD+space)/2*sqrt(3));
         } else if (i==3) {//upright
-          px=Stones.get(p).get(0)+px((lensD+space)/2);
+          pX=Stones.get(p).get(0)+px((lensD+space)/2);
           py=Stones.get(p).get(1)-px((lensD+space)/2*sqrt(3));
         } else if (i==4) {//downleft
-          px=Stones.get(p).get(0)-px((lensD+space)/2);
+          pX=Stones.get(p).get(0)-px((lensD+space)/2);
           py=Stones.get(p).get(1)+px((lensD+space)/2*sqrt(3));
         } else {//downright
-          px=Stones.get(p).get(0)+px((lensD+space)/2);
+          pX=Stones.get(p).get(0)+px((lensD+space)/2);
           py=Stones.get(p).get(1)+px((lensD+space)/2*sqrt(3));
         }
 
         for (int j=0; j<Stones.size()-(i+1); j++) {
-          dS=dist(Stones.get(j).get(0), Stones.get(j).get(1), px, py);
+          dS=dist(Stones.get(j).get(0), Stones.get(j).get(1), pX, py);
           if (dS<px(Stones.get(j).get(5)/2.0+lensD/2.0)) {
             cd=false;
           }
-          if (px<Dx||Dx+Dw<px) {
+          if (pX<Dx||Dx+Dw<pX) {
             cd=false;
           }
           if (py<Dy||Dy+Dh<py) {
@@ -114,16 +114,16 @@ void StoneFill2() {
           }
         }
         for (int j=0; j<Stones.size(); j++) {
-          dS=dist(Stones.get(j).get(0), Stones.get(j).get(1), px, py);
+          dS=dist(Stones.get(j).get(0), Stones.get(j).get(1), pX, py);
           if (dS<=px(Stones.get(j).get(5)/2.0+lensD/2.0)) {
             cd=false;
           }
         }
         if (cd) {
           noFill();
-          ellipse(px, py, px(lensD), px(lensD));
+          ellipse(pX, py, px(lensD), px(lensD));
           ArrayList<Float> Stone=new ArrayList<Float>();//一時保存
-          Stone.add(px);
+          Stone.add(pX);
           Stone.add(py);
           Stone.add(drawCount);//描画順
           Stone.add(0.0);//選択チェック
