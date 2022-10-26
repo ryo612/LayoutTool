@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>LayoutTool</title>
+  <!-- <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"> -->
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta http-equiv="content-language" content="ja" />
+  <script src="processing.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="main.css" />
+</head>
+
+
+<body>
+  <!-- data-processing-sources="LayoutTool_ver6_smartphone.pde cursor.pde pattern.pde mousePressed.pde UI.pde stone.pde file.pde stoneFill.pde stoneFill2.pde fileSelect.pde Circle.pde Contains.pde Cross.pde DelaunayTriangulation.pde Edge.pde GenerateSuperTriangle.pde GetCircumscribedCircle.pde GetOppositeEdge.pde GetTriangleShareEdge.pde GetVertexPoint.pde IsEqual.pde IsInsideOfTriangle.pde IsSharingPoint.pde Triangle.pde"></canvas>-->
+  <canvas id="app"
+    data-processing-sources="LayoutTool_ver6_smartphone.pde cursor.pde pattern.pde mousePressed.pde UI.pde stone.pde file.pde stoneFill.pde stoneFill2.pde fileSelect.pde Circle.pde Contains.pde Cross.pde DelaunayTriangulation.pde GenerateSuperTriangle.pde GetCircumscribedCircle.pde GetOppositeEdge.pde GetTriangleShareEdge.pde GetVertexPoint.pde IsEqual.pde IsInsideOfTriangle.pde IsSharingPoint.pde Triangle.pde Edge.pde"></canvas>
+  <!-- </div> -->
+
+
+  <script type="text/javascript" src="./test2.js"></script>
+
+  <script type="text/javascript">
+
+    function e_click() {
+      var cs = document.getElementById('app');
+      var ctx = cs.getContext('2d');
+      var w = cs.width;
+      var h = cs.height;
+      var x = 0;
+      var y = 0;
+
+      function downloadCSV() {
+        var processingInstance;
+        if (!processingInstance) {
+          processingInstance = Processing.getInstanceById('app');
+        }
+        //ダウンロードするCSVファイル名を指定する
+        const filename = "stone.csv";
+        //CSVデータ
+        const data = processingInstance.test();
+        //BOMを付与する（Excelでの文字化け対策）
+        const bom = new Uint8Array([0xef, 0xbb, 0xbf]);
+        //Blobでデータを作成する
+        const blob = new Blob([bom, data], { type: "text/csv" });
+
+        //IE10/11用(download属性が機能しないためmsSaveBlobを使用）
+        if (window.navigator.msSaveBlob) {
+          window.navigator.msSaveBlob(blob, filename);
+          //その他ブラウザ
+        } else {
+          //BlobからオブジェクトURLを作成する
+          const url = (window.URL || window.webkitURL).createObjectURL(blob);
+          //ダウンロード用にリンクを作成する
+          const download = document.createElement("a");
+          //リンク先に上記で生成したURLを指定する
+          download.href = url;
+          //download属性にファイル名を指定する
+          download.download = filename;
+          //作成したリンクをクリックしてダウンロードを実行する
+          download.click();
+          //createObjectURLで作成したオブジェクトURLを開放する
+          (window.URL || window.webkitURL).revokeObjectURL(url);
+        }
+      }
+
+      function downloadZip() {
+        var zip = new JSZip();
+        // var img_element = document.createElement("img");
+        // img_element.src = "./P0.png";
+        var processingInstance;
+        if (!processingInstance) {
+          processingInstance = Processing.getInstanceById('app');
+        }
+        //CSVデータ
+        const data = processingInstance.test();
+
+        //zip.file("P0.png",png);
+        zip.file("stone.csv",data);
+        //zip.file("P0.png", "P0.png");
+        //zip.file("P0.png","./P0.png");
+        zip.generateAsync({ type: 'blob', compression: 'DEFLATE' })
+          .then(function (content) {
+            //IE10/11用(download属性が機能しないためmsSaveBlobを使用）
+            if (window.navigator.msSaveBlob) {
+              window.navigator.msSaveBlob(content, 'sample.zip');
+              //その他ブラウザ
+            } else {
+              //BlobからオブジェクトURLを作成する
+              const url = (window.URL || window.webkitURL).createObjectURL(content);
+              //ダウンロード用にリンクを作成する
+              const download = document.createElement('a');
+              //リンク先に上記で生成したURLを指定する
+              download.href = url;
+              //download属性にファイル名を指定する
+              download.download = 'sample.zip';
+              //作成したリンクをクリックしてダウンロードを実行する
+              download.click();
+              //createObjectURLで作成したオブジェクトURLを開放する
+              (window.URL || window.webkitURL).revokeObjectURL(url);
+            }
+          });
+      }
+
+      function onClick(e) {
+        var rect = e.target.getBoundingClientRect();
+        x = e.clientX - rect.left;
+        y = e.clientY - rect.top;
+
+        //draw();
+        var processingInstance;
+        if (!processingInstance) {
+          processingInstance = Processing.getInstanceById('app');
+        }
+
+        if (processingInstance.download()[0]<x && y < processingInstance.download()[3]) {
+          //downloadCSV();
+          downloadZip();
+        }
+      }
+
+      // function buttonClick() {
+      //   var processingInstance;
+      //   if (!processingInstance) {
+      //     processingInstance = Processing.getInstanceById('app');
+      //   }
+      //   //let str = "HelloWorld!\r\nこんにちは世界！\r\n"; // 出力文字列
+      //   let str = String(processingInstance.test());
+      //   let ary = str.split(''); // 配列形式に変換（後述のBlobで全要素出力）
+      //   let blob = new Blob(ary, { type: "text/plan" }); // テキスト形式でBlob定義
+      //   let link = document.createElement('a'); // HTMLのaタグを作成
+      //   link.href = URL.createObjectURL(blob); // aタグのhref属性を作成
+      //   link.download = 'test.txt'; // aタグのdownload属性を作成
+      //   link.click(); // 定義したaタグをクリック（実行）
+      // }
+
+      //マウスでクリックされたらonClick関数を実行する
+      cs.addEventListener('click', onClick, false);
+    }
+
+    //関数を実行
+    e_click();
+
+
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+/* *:focus-ring {
+    outline: none;
+} */
+
+/* *{
+    outline: none;
+  } */
+
+  a {outline:none;}
+ 
+ 
+  a {
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+    cursor:pointer;
+  }
+
+body {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+}
+
+
+body {
+    overflow: hidden;
+}
