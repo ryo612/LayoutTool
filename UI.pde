@@ -29,7 +29,7 @@ void UI() {
   }
   noStroke();
   fill(0, 50);
-  //rect(Tx+Tw*tool, Ty, Tw, Th);
+  ellipse(Tx+Tw*tool+Tw/2, Ty+Th/2, Tw, Th);
 
   //file
 
