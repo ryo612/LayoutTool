@@ -1,19 +1,12 @@
 /* @pjs preload="tool_0.png, tool_1.png, tool_2.png, tool_3.png, tool_0_icon.png, tool_1_icon.png, tool_2_icon.png, tool_3_icon.png, P0.png, P2.png, P3.png, P4.png, P5.png, P6.png, P7.png, P8.png, P9.png, P10.png, P11.png, P12.png, P13.png, download.png"; */
-//import processing.svg.*;
-//import java.io.File;
-//import javax.swing.*;
-// import java.util.Deque;
-// import java.util.LinkedList;
 
-// DelaunayTriangulation diagram;
+DelaunayTriangulation diagram;
 int dispMode = 0;
 
 String getFile = null;
 
 PrintWriter csv; 
 
-//SVG用のライブラリをインポート
-//import processing.svg.PGraphicsSVG;
 
 ArrayList<ArrayList<Float>> Mouses=new ArrayList<ArrayList<Float>>();
 //[x,y,描画順,選択チェック,石の種類，石の直径]
@@ -96,7 +89,7 @@ int pick=-1;
 void setup() {
   //frameRate(60);
   size(displayW,displayH/*,P2D*/);
-  // diagram = new DelaunayTriangulation();
+  diagram = new DelaunayTriangulation();
   smooth();
   //pixelDensity(displayDensity());
   //pixelDensity(I);
@@ -128,28 +121,27 @@ void setup() {
   PSy=Dy+Dh+40;
 
 
-
-  for (int j=0; j<7*2; j++) {//カーソル用のパターン保存
-    iconP[j] = createGraphics(100, 100);
-    iconP[j].beginDraw();
-    iconP[j].background(0, 0, 0, 0); 
-    iconP[j].noStroke();
-    for (int i=0; i<8; i++) {
-      if (i%2==0) {
-        iconP[j].fill(COLOR[j][0][0], COLOR[j][0][1], COLOR[j][0][2]);
-      } else if (i%4==1) {
-        iconP[j].fill(COLOR[j][1][0], COLOR[j][1][1], COLOR[j][1][2]);
-      } else {
-        iconP[j].fill(COLOR[j][2][0], COLOR[j][2][1], COLOR[j][2][2]);
-      }
-      iconP[j].arc(50, 50, 100, 100, radians(0+i*45), radians(45+i*45));
-      iconP[j].fill(COLOR[j][0][0], COLOR[j][0][1], COLOR[j][0][2]);
-      iconP[j].ellipse(50, 50, 100/2.5, 100/2.5);
-    }
-    iconP[j].endDraw();
-    //println(COLOR[j][0][0]);
-    iconP[j].save("data/P"+j+".png");
-  }
+  // for (int j=0; j<7*2; j++) {//カーソル用のパターン保存
+  //   iconP[j] = createGraphics(100, 100);
+  //   iconP[j].beginDraw();
+  //   iconP[j].background(0, 0, 0, 0); 
+  //   iconP[j].noStroke();
+  //   for (int i=0; i<8; i++) {
+  //     if (i%2==0) {
+  //       iconP[j].fill(COLOR[j][0][0], COLOR[j][0][1], COLOR[j][0][2]);
+  //     } else if (i%4==1) {
+  //       iconP[j].fill(COLOR[j][1][0], COLOR[j][1][1], COLOR[j][1][2]);
+  //     } else {
+  //       iconP[j].fill(COLOR[j][2][0], COLOR[j][2][1], COLOR[j][2][2]);
+  //     }
+  //     iconP[j].arc(50, 50, 100, 100, radians(0+i*45), radians(45+i*45));
+  //     iconP[j].fill(COLOR[j][0][0], COLOR[j][0][1], COLOR[j][0][2]);
+  //     iconP[j].ellipse(50, 50, 100/2.5, 100/2.5);
+  //   }
+  //   iconP[j].endDraw();
+  //   //println(COLOR[j][0][0]);
+  //   iconP[j].save("data/P"+j+".png");
+  // }
 
 
   tImage[0]=loadImage("tool_0.png");
@@ -180,7 +172,7 @@ void setup() {
   Mouses.add(Mouse);
 }
 
-void point(float x, float y)
+void Point(float x, float y)
 {
   strokeWeight(3);
   ellipse(x, y, 1, 1);
@@ -421,8 +413,6 @@ void mouseReleased() {//図形を描き終わった判定
   Mouse.add(-1.0);//石の種類
   Mouses.add(Mouse);
   pick=-1;
-  //println(Stones);
-  //println(test());
 }
 
 
