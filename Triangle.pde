@@ -9,7 +9,7 @@ public class Triangle
     Edge CA;
     Circle circum;
 
-    color Color;
+    //color Color;
 
     public Triangle(PVector a, PVector b, PVector c)
     {

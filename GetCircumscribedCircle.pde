@@ -14,5 +14,8 @@ public Circle GetCircumscribedCircle(Triangle triangle)
     PVector center = new PVector(x, y);
     float r = PVector.dist(center, triangle.A);
 
+    //println("0k");
+
     return new Circle(center, r);
 }
+

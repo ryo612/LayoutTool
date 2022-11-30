@@ -1,44 +1,44 @@
-public Triangle GetTriangleShareEdge(Triangle ABC, Edge AB, Deque<Triangle> triangles)
+public Triangle GetTriangleShareEdge(Triangle ABC, Edge AB, ArrayList<Triangle> triangles)
 {
   Triangle ADB = ABC;//仮置
   PVector A = AB.start;
   PVector B = AB.end;
 
   boolean detected = false;
-  Deque<Triangle> S = new LinkedList<Triangle>();
+  ArrayList<Triangle> S = new ArrayList<Triangle>();
 
   while (triangles.size() > 0)
   {
-    Triangle checking = triangles.pop();
+    Triangle checking = triangles./*pop*/remove(0);
     //三角形がABを含むものかを調べる
-    if (Contains(checking, AB))
+    if (EContains(checking, AB))
     {
       if (IsEqual(checking, ABC))
       {
         //ABCと同じやつだった場合
-        S.push(checking);
+        S./*push*/add(checking);
       } else
       {
         PVector D = GetVertexPoint(checking, AB);
-        color Color = checking.Color;
+        //color Color = checking.Color;
         ADB = new Triangle(A, D, B);
-        ADB.Color = Color;
+        //ADB.Color = Color;
         break;
       }
     } else
     {
       //条件に合わなかった場合
-      S.push(checking);
+      S./*push*/add(checking);
     }
   }
 
 
-  while (S.size() >0) triangles.push(S.pop());
+  while (S.size() >0) triangles./*push*/add(S.remove(0)/*pop()*/);
 
   return ADB;
 }
 
-public Triangle GetTriangleShareEdgeND(Triangle ABC, Edge AB, Deque<Triangle> triangles)
+public Triangle GetTriangleShareEdgeND(Triangle ABC, Edge AB, ArrayList<Triangle> triangles)
 {
   Triangle ADB = ABC;//仮置
   PVector A = AB.start;
@@ -47,12 +47,12 @@ public Triangle GetTriangleShareEdgeND(Triangle ABC, Edge AB, Deque<Triangle> tr
   for (Triangle checking : triangles)
   {
     //三角形がABを含むものかを調べる
-    if (Contains(checking, AB) && !IsEqual(checking, ABC))
+    if (EContains(checking, AB) && !IsEqual(checking, ABC))
     {
       PVector D = GetVertexPoint(checking, AB);
-      color Color = checking.Color;
+      // Color = checking.Color;
       ADB = new Triangle(A, D, B);
-      ADB.Color = Color;
+      //ADB.Color = Color;
       break;
     }
   }

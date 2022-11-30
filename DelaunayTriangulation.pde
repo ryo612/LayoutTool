@@ -1,7 +1,7 @@
 public class DelaunayTriangulation
 {
-  Deque<PVector> points = new LinkedList<PVector>();
-  Deque<Triangle> diagram = new LinkedList<Triangle>();
+  ArrayList<PVector> points = new ArrayList<PVector>();
+  ArrayList<Triangle> diagram = new ArrayList<Triangle>();
   Triangle superTriangle;
 
   public DelaunayTriangulation()
@@ -13,7 +13,7 @@ public class DelaunayTriangulation
   void Draw()
   {
     //superTriangle.Draw();
-    for (PVector p : points) point(p.x, p.y);
+    for (PVector p : points) Point(p.x, p.y);
     for (Triangle t : diagram)
     {
       switch(dispMode) {
@@ -29,8 +29,8 @@ public class DelaunayTriangulation
       default:
         t.Draw();
         noFill();
-        stroke(Contains(t.circum, new PVector(mouseX, mouseY))? #F00000 : #000000, 100);
-        stroke(Contains(t.circum, new PVector(mouseX, mouseY))? #F00000 : #A0A0A0, 100);
+        stroke(TContains(t.circum, new PVector(mouseX, mouseY))? #F00000 : #000000, 100);
+        stroke(TContains(t.circum, new PVector(mouseX, mouseY))? #F00000 : #A0A0A0, 100);
         t.circum.Draw();
         break;
       }
@@ -41,17 +41,20 @@ public class DelaunayTriangulation
     float xg=0;//重心のx座標
     float yg=0;//重心のy座標
     float[] newpoint={0, 0};
+
     ArrayList<PVector> area=new ArrayList<PVector>();//p(ラインストーンの中心)を囲むボロノイ図の点を格納するリスト
     for (Triangle t : diagram) {
-      if (Contains(t.circum, new PVector(p.x, p.y))) {
+      if (TContains(t.circum, new PVector(p.x, p.y))) {
+              //println("0k"); 
         if (0<t.circum.center.x&&t.circum.center.x<width) {
           if (0<t.circum.center.y&&t.circum.center.y<height) {
-            //point(t.circum.center.x, t.circum.center.y);
+            //Point(t.circum.center.x, t.circum.center.y);
             area.add(t.circum.center);
           }
         }
       }
     }
+
     for (int i=0; i<area.size(); i++) {//重複の削除
       for (int j=0; j<area.size(); j++) {
         if (i!=j) {
@@ -128,7 +131,7 @@ public class DelaunayTriangulation
       xg=xg/St;
       yg=yg/St;
 
-      //point(xg, yg);
+      //Point(xg, yg);
       newpoint[0]=xg;
       newpoint[1]=yg;
     }
@@ -157,14 +160,15 @@ public class DelaunayTriangulation
   void Finalize()
   {
     //diagramから、superTriangleの各頂点を含む三角形を除外する
-    Deque<Triangle> S = CopyStackOf(diagram);
+    ArrayList<Triangle> S = CopyStackOf(diagram);
     diagram.clear();
     while (S.size()>0)
     {
-      Triangle checking = S.pop();
+      //Triangle checking = S.pop();
+      Triangle checking = S.remove(0);
       if (!IsSharingPoint(checking, superTriangle))
       {
-        diagram.push(checking);
+        diagram./*push*/add(checking);
       }
     }
   }
@@ -172,87 +176,87 @@ public class DelaunayTriangulation
   void Triangulation(PVector p)
   {
     //diagramと同じ内容のスタックを組む。
-    Deque<Triangle> baseTriangles = CopyStackOf(diagram);
+    ArrayList<Triangle> baseTriangles = CopyStackOf(diagram);
 
     //分割後の三角形を格納するスタック
-    Deque<Triangle> newTriangles = new LinkedList<Triangle>();
+    ArrayList<Triangle> newTriangles = new ArrayList<Triangle>();
 
     //pを含む三角形ABCを探す
     Triangle ABC = IsInsideOfTriangle(baseTriangles, p);
 
-    for (Triangle t : Divide(baseTriangles, ABC, p)) newTriangles.push(t);
+    for (Triangle t : Divide(baseTriangles, ABC, p)) newTriangles./*push*/add(t);
 
-    while (baseTriangles.size()>0) newTriangles.push(baseTriangles.pop());
+    while (baseTriangles.size()>0) newTriangles./*push*/add(baseTriangles.remove(0)/*pop()*/);
 
     //新しい三角形達でdiagramを更新
     diagram = CopyStackOf(newTriangles);
   }
 
-  Deque<Triangle> Divide(Deque<Triangle> baseTriangles, Triangle checking, PVector p)
+  ArrayList<Triangle> Divide(ArrayList<Triangle> baseTriangles, Triangle checking, PVector p)
   {
     //pがABCの内側にあるため、ABP, BCP, CAPに分割
-    Deque<Triangle> divided = new LinkedList<Triangle>();
-    divided.push(new Triangle(checking.A, checking.B, p));
-    divided.push(new Triangle(checking.B, checking.C, p));
-    divided.push(new Triangle(checking.C, checking.A, p));
+    ArrayList<Triangle> divided = new ArrayList<Triangle>();
+    divided./*push*/add(new Triangle(checking.A, checking.B, p));
+    divided./*push*/add(new Triangle(checking.B, checking.C, p));
+    divided./*push*/add(new Triangle(checking.C, checking.A, p));
 
-    Deque<Triangle> newTriangles = new LinkedList<Triangle>();
+    ArrayList<Triangle> newTriangles = new ArrayList<Triangle>();
     //新しくできた三角形の集合dividedに対して処理を行っていく。
     //三角形をABPとして考える。pの対角辺である辺ABを共有する三角形ADBをbaseTrianglesから探す。
     //戻すトライアングル
     while (divided.size()>0)
     {
-      Triangle ABC = divided.pop();
+      Triangle ABC = divided.remove(0);/*pop();*/
       Edge AB = GetOppositeEdge(ABC, p);
       Triangle ADB = GetTriangleShareEdge(ABC, AB, baseTriangles);
       if (IsEqual(ABC, ADB))
       {
         //println("isnt special");
-        newTriangles.push(ABC);
+        newTriangles./*push*/add(ABC);
         //println(IsEqual(p, GetVertexPoint(ADB, AB)));
         //println(IsEqual(ABC, ADB));
         continue;
       }
 
       PVector D = GetVertexPoint(ADB, AB);
-      if (Contains(ABC, D))
+      if (TContains(ABC, D))
       {
         //FLIP
         //println("flip");
-        Deque<Triangle> FlipedTriangles = Flip(ADB, AB, p);
-        for (Triangle t : FlipedTriangles) divided.push(t);
+        ArrayList<Triangle> FlipedTriangles = Flip(ADB, AB, p);
+        for (Triangle t : FlipedTriangles) divided./*push*/add(t);
       } else
       {
         //println("call");
-        newTriangles.push(ABC);
-        newTriangles.push(ADB);
+        newTriangles./*push*/add(ABC);
+        newTriangles./*push*/add(ADB);
       }
     }
 
     return newTriangles;
   }
 
-  Deque<Triangle> Flip(Triangle ADB, Edge AB, PVector p)
+  ArrayList<Triangle> Flip(Triangle ADB, Edge AB, PVector p)
   {
-    Deque<Triangle> FlipedTriangles = new LinkedList<Triangle>();
+    ArrayList<Triangle> FlipedTriangles = new ArrayList<Triangle>();
 
     PVector D = GetVertexPoint(ADB, AB);
     PVector A = AB.start;
     PVector B = AB.end;
 
-    FlipedTriangles.push(new Triangle(A, D, p));
-    FlipedTriangles.push(new Triangle(D, B, p));
+    FlipedTriangles./*push*/add(new Triangle(A, D, p));
+    FlipedTriangles./*push*/add(new Triangle(D, B, p));
 
     return FlipedTriangles;
   }
 
-  Deque<Triangle> CopyStackOf(Deque<Triangle> stack)
+  ArrayList<Triangle> CopyStackOf(ArrayList<Triangle> stack)
   {
-    Deque<Triangle> returnTriangles = new LinkedList<Triangle>();
+    ArrayList<Triangle> returnTriangles = new ArrayList<Triangle>();
 
     for (Triangle item : stack)
     {
-      returnTriangles.push(item);
+      returnTriangles./*push*/add(item);
     }
     return returnTriangles;
   }
