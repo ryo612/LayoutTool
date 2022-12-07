@@ -9,7 +9,7 @@ public class Circle
         radius = r;
     }
 
-    public void Draw()
+    public void CDraw()
     {
         ellipse(center.x, center.y, radius*2, radius*2);
     }

@@ -19,19 +19,22 @@ public class DelaunayTriangulation
       switch(dispMode) {
       case 0:
         //Voronoi 
-        Line(t.circum.center, GetTriangleShareEdgeND(t, t.AB, diagram).circum.center);
-        Line(t.circum.center, GetTriangleShareEdgeND(t, t.BC, diagram).circum.center);
-        Line(t.circum.center, GetTriangleShareEdgeND(t, t.CA, diagram).circum.center);
+        // Line(t.circum.center, GetTriangleShareEdgeND(t, t.AB, diagram).circum.center);
+        // Line(t.circum.center, GetTriangleShareEdgeND(t, t.BC, diagram).circum.center);
+        // Line(t.circum.center, GetTriangleShareEdgeND(t, t.CA, diagram).circum.center);
+        Line(GetCircumscribedCircle(t).center, GetCircumscribedCircle(GetTriangleShareEdgeND(t, t.AB, diagram)).center);
+        Line(GetCircumscribedCircle(t).center, GetCircumscribedCircle(GetTriangleShareEdgeND(t, t.BC, diagram)).center);
+        Line(GetCircumscribedCircle(t).center, GetCircumscribedCircle(GetTriangleShareEdgeND(t, t.CA, diagram)).center);
         break;
       case 1:
-        t.Draw();
+        t.TDraw();
         break;
       default:
-        t.Draw();
+        t.TDraw();
         noFill();
-        stroke(TContains(t.circum, new PVector(mouseX, mouseY))? #F00000 : #000000, 100);
-        stroke(TContains(t.circum, new PVector(mouseX, mouseY))? #F00000 : #A0A0A0, 100);
-        t.circum.Draw();
+        stroke(CContains(GetCircumscribedCircle(t), new PVector(mouseX, mouseY))? #F00000 : #000000, 100);
+        stroke(CContains(GetCircumscribedCircle(t), new PVector(mouseX, mouseY))? #F00000 : #A0A0A0, 100);
+        GetCircumscribedCircle(t).CDraw();
         break;
       }
     }
@@ -44,12 +47,12 @@ public class DelaunayTriangulation
 
     ArrayList<PVector> area=new ArrayList<PVector>();//p(ラインストーンの中心)を囲むボロノイ図の点を格納するリスト
     for (Triangle t : diagram) {
-      if (TContains(t.circum, new PVector(p.x, p.y))) {
+      if (CContains(GetCircumscribedCircle(t), new PVector(p.x, p.y))) {
               //println("0k"); 
-        if (0<t.circum.center.x&&t.circum.center.x<width) {
-          if (0<t.circum.center.y&&t.circum.center.y<height) {
-            //Point(t.circum.center.x, t.circum.center.y);
-            area.add(t.circum.center);
+        if (0<GetCircumscribedCircle(t).center.x&&GetCircumscribedCircle(t).center.x<displayW) {
+          if (0<GetCircumscribedCircle(t).center.y&&GetCircumscribedCircle(t).center.y<displayH) {
+            //Point(GetCircumscribedCircle(t).center.x, GetCircumscribedCircle(t).center.y);
+            area.add(GetCircumscribedCircle(t).center);
           }
         }
       }
@@ -209,12 +212,12 @@ public class DelaunayTriangulation
       Triangle ABC = divided.remove(0);/*pop();*/
       Edge AB = GetOppositeEdge(ABC, p);
       Triangle ADB = GetTriangleShareEdge(ABC, AB, baseTriangles);
-      if (IsEqual(ABC, ADB))
+      if (TIsEqual(ABC, ADB))
       {
         //println("isnt special");
         newTriangles./*push*/add(ABC);
-        //println(IsEqual(p, GetVertexPoint(ADB, AB)));
-        //println(IsEqual(ABC, ADB));
+        //println(PIsEqual(p, GetVertexPoint(ADB, AB)));
+        //println(TIsEqual(ABC, ADB));
         continue;
       }
 

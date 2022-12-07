@@ -1,10 +1,10 @@
 public PVector GetVertexPoint(Triangle triangle, Edge edge)
 {
-    if(IsEqual(edge, triangle.AB))
+    if(EIsEqual(edge, triangle.AB))
     {
         return triangle.C;
     }
-    else if(IsEqual(edge, triangle.BC))
+    else if(EIsEqual(edge, triangle.BC))
     {
         return triangle.A;
     }

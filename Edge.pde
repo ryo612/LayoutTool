@@ -9,7 +9,7 @@ public class Edge
         end = e;
     }
 
-    public void Draw()
+    public void EDraw()
     {
         line(start.x, start.y, end.x, end.y);
     }

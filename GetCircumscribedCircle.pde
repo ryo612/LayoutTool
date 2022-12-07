@@ -6,6 +6,7 @@ public Circle GetCircumscribedCircle(Triangle triangle)
     float y2 = triangle.B.y;
     float x3 = triangle.C.x;
     float y3 = triangle.C.y;
+    //println(x1);
 
     float c = 2.0 * ((x2 - x1) * (y3 - y1) - (y2 - y1) * (x3 - x1));
     float x = ((y3 - y1) * (x2 * x2 - x1 * x1 + y2 * y2 - y1 * y1)+(y1 - y2) * (x3 * x3 - x1 * x1 + y3 * y3 - y1 * y1))/c;
@@ -15,7 +16,9 @@ public Circle GetCircumscribedCircle(Triangle triangle)
     float r = PVector.dist(center, triangle.A);
 
     //println("0k");
+    Circle a = new Circle(center, r);
+    //println(a.center);
 
-    return new Circle(center, r);
+    return a;
 }
 

@@ -1,6 +1,6 @@
 public boolean IsSharingPoint(Triangle A, Triangle B)
 {
-    return  IsEqual(A.A, B.A) || IsEqual(A.A, B.B)|| IsEqual(A.A, B.C)||
-            IsEqual(A.B, B.A) || IsEqual(A.B, B.B)|| IsEqual(A.B, B.C)||
-            IsEqual(A.C, B.A) || IsEqual(A.C, B.B)|| IsEqual(A.C, B.C);
+    return  PIsEqual(A.A, B.A) || PIsEqual(A.A, B.B)|| PIsEqual(A.A, B.C)||
+            PIsEqual(A.B, B.A) || PIsEqual(A.B, B.B)|| PIsEqual(A.B, B.C)||
+            PIsEqual(A.C, B.A) || PIsEqual(A.C, B.B)|| PIsEqual(A.C, B.C);
 }

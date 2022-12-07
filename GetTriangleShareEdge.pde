@@ -13,7 +13,7 @@ public Triangle GetTriangleShareEdge(Triangle ABC, Edge AB, ArrayList<Triangle> 
     //三角形がABを含むものかを調べる
     if (EContains(checking, AB))
     {
-      if (IsEqual(checking, ABC))
+      if (TIsEqual(checking, ABC))
       {
         //ABCと同じやつだった場合
         S./*push*/add(checking);
@@ -47,7 +47,7 @@ public Triangle GetTriangleShareEdgeND(Triangle ABC, Edge AB, ArrayList<Triangle
   for (Triangle checking : triangles)
   {
     //三角形がABを含むものかを調べる
-    if (EContains(checking, AB) && !IsEqual(checking, ABC))
+    if (EContains(checking, AB) && !TIsEqual(checking, ABC))
     {
       PVector D = GetVertexPoint(checking, AB);
       // Color = checking.Color;

@@ -1,17 +1,17 @@
-public boolean IsEqual(Triangle A, Triangle B)
+public boolean TIsEqual(Triangle A, Triangle B)
 {
-    return  (IsEqual(A.AB, B.AB) || IsEqual(A.AB, B.BC) || IsEqual(A.AB, B.CA))&&
-            (IsEqual(A.BC, B.AB) || IsEqual(A.BC, B.BC) || IsEqual(A.BC, B.CA));
+    return  (EIsEqual(A.AB, B.AB) || EIsEqual(A.AB, B.BC) || EIsEqual(A.AB, B.CA))&&
+            (EIsEqual(A.BC, B.AB) || EIsEqual(A.BC, B.BC) || EIsEqual(A.BC, B.CA));
 }
 
 
-public boolean IsEqual(Edge A,Edge B)
+public boolean EIsEqual(Edge A,Edge B)
 {
-    return  (IsEqual(A.start, B.start) && IsEqual(A.end, B.end))||
-            (IsEqual(A.start, B.end) && IsEqual(A.end, B.start));
+    return  (PIsEqual(A.start, B.start) && PIsEqual(A.end, B.end))||
+            (PIsEqual(A.start, B.end) && PIsEqual(A.end, B.start));
 }
 
-public boolean IsEqual(PVector A,PVector B)
+public boolean PIsEqual(PVector A,PVector B)
 {
     return (A.x == B.x)&&(A.y == B.y);
 }

@@ -25,7 +25,7 @@ public class Triangle
         circum = GetCircumscribedCircle(this);
     }
     
-    public void Draw()
+    public void TDraw()
     {
         stroke(0);
         noFill();
