@@ -12,8 +12,8 @@ void mousePressed() {
     if (Px<mouseX&&mouseX<Px+Pw*7) {  */
     
     //pattern
-    for (int j = 0; j < 2; j++) {
-        for (int i = 0; i < 7; i++) {
+    for (int j = 0; j < 1; j++) {
+        for (int i = 0; i < 14; i++) {
            if (Px + Pw * i < mouseX &&  mouseX < Px + Pw * i + Pw) {
                 if (Py + Ph * j < mouseY &&  mouseY < Py + Ph * j + Ph) {
                     selectCol = i + j * 7;
