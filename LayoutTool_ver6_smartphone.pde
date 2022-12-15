@@ -99,7 +99,7 @@ void setup() {
   Dh=displayH-150;
 
   Tx=Dx;
-  Ty=Dy+Dh-10;
+  Ty=Dy+Dh-25;
   Tw=displayW/10;
   Th=displayW/10;
 
