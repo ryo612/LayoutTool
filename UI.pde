@@ -51,7 +51,8 @@ void UI() {
   //pattern
   noStroke();
   fill(0, 50);
-  rect(Px+Pw*(selectCol%7), Py+Ph*int(selectCol/7), Pw, Ph);
+  rect(Px+Pw*selectCol, Py+Ph, Pw, Ph);
+  //rect(Px+Pw*(selectCol%7), Py+Ph*int(selectCol/7), Pw, Ph);
   for (int j=0; j<1; j++) {
     for (int i=0; i<14; i++) {
       noFill();
