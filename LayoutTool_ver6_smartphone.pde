@@ -96,10 +96,10 @@ void setup() {
   Dx=10;
   Dy=50;
   Dw=displayW-35;
-  Dh=displayH-180;
+  Dh=displayH-150;
 
   Tx=Dx;
-  Ty=Dy+Dh+10;
+  Ty=Dy+Dh-10;
   Tw=displayW/10;
   Th=displayW/10;
 
