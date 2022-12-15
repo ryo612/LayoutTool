@@ -111,8 +111,8 @@ void setup() {
   Pw=displayW/10;
   Ph=displayW/10;
   //Px=Dx+Dw+30;
-  Px=displayW-Pw*5-25;
-  Py=Dy+Dh+50;
+  Px=/*displayW-Pw*5-25*/Tx;
+  Py=/*Dy+Dh+50*/Ty+Th+5;
 
   //直径バー
   PSw=displayW/2-40;
