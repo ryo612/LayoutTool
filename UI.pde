@@ -53,7 +53,7 @@ void UI() {
   fill(0, 50);
   rect(Px+Pw*(selectCol%7), Py+Ph*int(selectCol/7), Pw, Ph);
   for (int j=0; j<1; j++) {
-    for (int i=0; i<10; i++) {
+    for (int i=0; i<14; i++) {
       noFill();
       stroke(0);
       rect(Px+Pw*i, Py+Ph*j, Pw, Ph);
