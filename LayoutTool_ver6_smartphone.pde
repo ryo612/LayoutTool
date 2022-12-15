@@ -108,8 +108,8 @@ void setup() {
   Fx=displayW-Fw-25;
   Fy=0;
 
-  Pw=displayW/10;
-  Ph=displayW/10;
+  Pw=displayW/14;
+  Ph=displayW/14;
   //Px=Dx+Dw+30;
   Px=/*displayW-Pw*5-25*/Tx;
   Py=/*Dy+Dh+50*/Ty+Th+5;
