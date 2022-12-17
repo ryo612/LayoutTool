@@ -1,4 +1,5 @@
 void mousePressed() {
+    if(stop==0){
     if(Fy < mouseY &&  mouseY < Fy + Fh) {
         if (Fx < mouseX &&  mouseX < Fx + Fw) {
             file = 1;//save
@@ -6,6 +7,19 @@ void mousePressed() {
             file = 2;//output
         }
 }
+
+// //back
+// if(Fy+5 < mouseY &&  mouseY < Fy+5 + Fh) {
+//     if(5< mouseX &&  mouseX < 5 + Fw) {
+//         // int dif=backnum.get(backnum.size()-1)-backnum.get(backnum.size()-2);
+//         for(int i=backnum.get(backnum.size()-2);i<Stones.size();i++){
+//             Stones.remove(backnum.get(backnum.size()-2));
+//     }
+//     backnum.remove(backnum.size()-1);
+//     // backnum.remove(backnum.get(backnum.size()-1));
+//     //println(backnum.get(backnum.size()-1));
+// }
+// }
     
     //pattern
     /*if (Py<mouseY&&mouseY<Py+Ph*2) {
@@ -38,5 +52,29 @@ void mousePressed() {
                 StoneFill2();     
         }
         }
+}
+    }
+}
+
+void mouseClicked(){
+//back
+if(stop==0){
+if(Fy+5 < mouseY &&  mouseY < Fy+5 + Fh) {
+    if(5< mouseX &&  mouseX < 5 + Fw) {
+        starttime=time;
+        //println(abs(endtime-starttime));
+        if(abs(endtime-starttime)>10){
+        // int dif=backnum.get(backnum.size()-1)-backnum.get(backnum.size()-2);
+        // println(backnum.get(backnum.size()-2)+","+Stones.size());
+        for(int i=backnum.get(backnum.size()-2);i<backnum.get(backnum.size()-1);i++){
+            Stones.remove(backnum.get(backnum.size()-2));
+    }
+    backnum.remove(backnum.size()-1);
+        }
+    endtime=time;
+    // backnum.remove(backnum.get(backnum.size()-1));
+    //println(backnum.get(backnum.size()-1));
+}
+}
 }
 }

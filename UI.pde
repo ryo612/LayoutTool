@@ -37,6 +37,7 @@ void UI() {
     noFill();
     //rect(Fx, Fy, Fw, Fh);
     image(dImage,Fx, Fy, Fw, Fh);
+    image(back,5,Fy+5,Fw,Fh);
     //String sf;
     // if (i==0) {
     //   sf="save";
@@ -58,7 +59,8 @@ void UI() {
       noFill();
       stroke(0);
       rect(Px+Pw*i, Py+Ph*j, Pw, Ph);
-      pattern(Px+(Pw)*i+Pw/2, Py+(Ph)*j+Ph/2, Pw*0.7, COLOR, i+j*7);
+      //pattern(Px+(Pw)*i+Pw/2, Py+(Ph)*j+Ph/2, Pw*0.7, COLOR, i+j*7);
+      image(pImage[i],Px+(Pw)*i+Pw/5, Py+(Ph)*j+Ph/5,Pw-8,Ph-8);
     }
   }
 

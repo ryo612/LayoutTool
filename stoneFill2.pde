@@ -1,4 +1,5 @@
 void StoneFill2() {
+  stop=1;
   boolean CD=true;
   float dS=0;
   int plusstone=0;
@@ -185,6 +186,6 @@ void StoneFill2() {
     //println(u);
   }
   fillstone=0;
-  
+  stop=0;
 }
 
