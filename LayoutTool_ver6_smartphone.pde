@@ -372,7 +372,7 @@ void draw() {
       // strokeWeight(0);
       // noFill();
       // ellipse(Stones.get(i).get(0), Stones.get(i).get(1), px(Stones.get(i).get(5)), px(Stones.get(i).get(5)));
-      image(pImage[int(Stones.get(i).get(4))],Stones.get(i).get(0),Stones.get(i).get(1),px(Stones.get(i).get(5)),px(Stones.get(i).get(5)));
+      image(pImage[int(Stones.get(i).get(4))],Stones.get(i).get(0)-px(Stones.get(i).get(5))/2,Stones.get(i).get(1)-px(Stones.get(i).get(5))/2,px(Stones.get(i).get(5)),px(Stones.get(i).get(5)));
     }
   }
 
