@@ -19,6 +19,7 @@ void StoneFill() {
     Stone.add(0.0);//選択チェック
     Stone.add(float(selectCol));//石の種類
     Stone.add(lensD);//石の直径
+    Stone.add(float(selectP));//石の種類
     Stones.add(Stone);
     drawingStone++;
   }
@@ -57,6 +58,7 @@ void StoneFill() {
       Stone.add(0.0);//選択チェック
       Stone.add(float(selectCol));//石の種類
       Stone.add(lensD);//石の直径
+      Stone.add(float(selectP));//石の種類2
       Stones.add(Stone);
       drawingStone++;
       plusstone++;
@@ -113,6 +115,7 @@ void StoneFill() {
           Stone.add(0.0);//選択チェック
           Stone.add(float(selectCol));//石の種類
           Stone.add(lensD);//石の直径
+          Stone.add(float(selectP));//石の種類2
           Stones.add(Stone);
           drawingStone++;
           plus++;

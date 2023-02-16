@@ -28,6 +28,7 @@ void stone(float space) {
             Stone.add(0.0);//選択チェック
             Stone.add(float(selectCol));//石の種類
             Stone.add(Mouses.get(i+1).get(5));//石の直径
+            Stone.add(float(selectP));//石の種類
             Stones.add(Stone);
             drawingStone++;
           }

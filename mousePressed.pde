@@ -27,10 +27,21 @@ void mousePressed() {
     
     //pattern
     for (int j = 0; j < 1; j++) {
-        for (int i = 0; i < 14; i++) {
+        for (int i = 0; i < 6; i++) {
            if (Px + Pw * i < mouseX &&  mouseX < Px + Pw * i + Pw) {
                 if (Py + Ph * j < mouseY &&  mouseY < Py + Ph * j + Ph) {
+                    selectP = i + j * 7;
+                }
+        }
+        }
+}
+
+for (int j = 0; j < 1; j++) {
+        for (int i = 0; i < 11; i++) {
+           if (Px + Pw * i < mouseX &&  mouseX < Px + Pw * i + Pw) {
+                if (Py + Ph * j + Ph < mouseY &&  mouseY < Py + Ph * j + Ph+ Ph) {
                     selectCol = i + j * 7;
+                    selectCP[selectP]=selectCol;
                 }
         }
         }
@@ -63,7 +74,7 @@ if(Fy+5 < mouseY &&  mouseY < Fy+5 + Fh) {
     if(5< mouseX &&  mouseX < 5 + Fw) {
         starttime=time;
         //println(abs(endtime-starttime));
-        if(abs(endtime-starttime)>10){
+        if(abs(endtime-starttime)>5){
         // int dif=backnum.get(backnum.size()-1)-backnum.get(backnum.size()-2);
         // println(backnum.get(backnum.size()-2)+","+Stones.size());
         for(int i=backnum.get(backnum.size()-2);i<backnum.get(backnum.size()-1);i++){

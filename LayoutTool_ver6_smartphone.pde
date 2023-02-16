@@ -1,4 +1,5 @@
-/* @pjs preload="tool_0.png, tool_1.png, tool_2.png, tool_3.png, tool_0_icon.png, tool_1_icon.png, tool_2_icon.png, tool_3_icon.png, P0.png, P2.png, P3.png, P4.png, P5.png, P6.png, P7.png, P8.png, P9.png, P10.png, P11.png, P12.png, P13.png, download.png, back.png, nekome.png"; */
+/* @pjs preload="tool_0.png, tool_1.png, tool_2.png, tool_3.png, tool_0_icon.png, tool_1_icon.png, tool_2_icon.png, tool_3_icon.png, download.png, back.png,
+P01.png, P02.png, P03.png, P04.png, P05.png, P06.png, P07.png, P08.png, P09.png, P010.png, P011.png, P11.png, P12.png, P13.png, P14.png, P15.png, P16.png, P17.png, P18.png, P19.png, P21.png, P22.png, P23.png, P24.png, P25.png, P26.png, P27.png, P28.png, P29.png, P31.png, P32.png, P33.png, P34.png, P35.png, P36.png, P37.png, P38.png, P39.png, P41.png, P42.png, P43.png, P44.png, P45.png, P46.png, P47.png, P48.png, P49.png, P51.png, P52.png, P53.png, P54.png, P55.png, P56.png, P57.png, P58.png, P59.png, P110.png, P111.png, P210.png, P211.png, P310.png, P311.png, P410.png, P411.png, P510.png, P511.png"; */
 
 DelaunayTriangulation diagram;
 int dispMode = 0;
@@ -15,7 +16,7 @@ String filename = "backdata.txt";
 
 ArrayList<Integer> backnum=new ArrayList<Integer>();
 ArrayList<ArrayList<Float>> Mouses=new ArrayList<ArrayList<Float>>();
-//[x,y,描画順,選択チェック,石の種類，石の直径]
+//[x,y,描画順,選択チェック,石の種類，石の直径,石の種類2]
 ArrayList<ArrayList<Float>> MOUSE=new ArrayList<ArrayList<Float>>();
 int mouseCouunt=0;
 ArrayList<ArrayList<Float>> Stones=new ArrayList<ArrayList<Float>>();//石の情報
@@ -80,7 +81,8 @@ int[][][] COLOR={ //https://materialui.co/colors/
   {{0, 0, 0}, {189, 189, 189}, {253, 216, 53}}//black
 };
 int selectCol=0;//選択中のパターン
-
+int selectP=0;//選択中のパターンの種類
+int[] selectCP=[0,0,0,0,0,0,0];//パターンごとの色
 float PSx=0;
 float PSy=0;
 float PSw=0;
@@ -89,7 +91,7 @@ float PSh=0;
 PImage[] tImage=new PImage[4];
 PImage[] tImageIcon=new PImage[4];
 PGraphics[] iconP=new PGraphics[14];
-PImage[] pImage=new PImage[14];
+PImage[] pImage=new PImage[6][11];
 PImage dImage;
 PImage back;
 
@@ -100,16 +102,16 @@ void setup() {
   //frameRate(60);
   size(displayW,displayH/*,P2D*/);
   diagram = new DelaunayTriangulation();
-  smooth();
+  noSmooth();
   //pixelDensity(displayDensity());
   //pixelDensity(I);
   Dx=10;
-  Dy=50;
+  Dy=50-5;
   Dw=displayW-35;
-  Dh=displayH-180;
+  Dh=displayH-180-10;
 
   Tx=Dx;
-  Ty=Dy+Dh+25;
+  Ty=Dy+Dh+25-5;
   Tw=displayW/10;
   Th=displayW/10;
 
@@ -118,8 +120,8 @@ void setup() {
   Fx=displayW-Fw-25;
   Fy=0;
 
-  Pw=displayW/15;
-  Ph=displayW/15;
+  Pw=displayW/13;
+  Ph=displayW/13;
   //Px=Dx+Dw+30;
   Px=/*displayW-Pw*5-25*/Tx;
   Py=/*Dy+Dh+50*/Ty+Th+5;
@@ -128,7 +130,7 @@ void setup() {
   PSw=displayW/2-40;
   PSh=10;
   PSx=displayW-PSw-25;
-  PSy=Dy+Dh+40;
+  PSy=Dy+Dh+40+10;
 
 
   // for (int j=0; j<7*2; j++) {//カーソル用のパターン保存
@@ -168,10 +170,16 @@ void setup() {
     tImageIcon[i].resize(15, 15);
   }
 
-  for (int i=0; i<13; i++) {
-    pImage[i]=loadImage("P"+i+".png");
+  for (int i=0; i<6; i++) {
+    for(int j=1;j<12;j++){
+      String si=i+""+j;
+      //String sj=j+"";
+    //pImage[i][j]=loadImage("P"+i+""+j+".png");
+    //pImage[i]=loadImage("P"+i+".png");
+    pImage[i][j-1]=loadImage("P"+si+".png");
+    }
   }
-  pImage[13]=loadImage("nekome.png");
+  //pImage[13]=loadImage("nekome.png");
 
 
   ArrayList<Float> Mouse=new ArrayList<Float>();//一時保存
@@ -182,6 +190,7 @@ void setup() {
   Mouse.add(-1.0);//石の種類
   Mouse.add(lensD);//石の直径
   Mouses.add(Mouse);
+  Mouse.add(-1.0);//石の種類2
 
   backnum.add(0);
   //backnum.add(0);
@@ -284,6 +293,7 @@ void draw() {
                   M.add(0.0);//選択チェック
                   M.add(-1.0);//石の種類
                   M.add(lensD);//石の直径
+                  M.add(-1.0);//石の種類
                   Mouses.add(M);
                 }
               }
@@ -297,6 +307,7 @@ void draw() {
           Mouse.add(0.0);//選択チェック
           Mouse.add(-1.0);//石の種類
           Mouse.add(lensD);//石の直径
+          Mouse.add(-1.0);//石の種類2
           Mouses.add(Mouse);
 
           stone(space);
@@ -372,7 +383,7 @@ void draw() {
       // strokeWeight(0);
       // noFill();
       // ellipse(Stones.get(i).get(0), Stones.get(i).get(1), px(Stones.get(i).get(5)), px(Stones.get(i).get(5)));
-      image(pImage[int(Stones.get(i).get(4))],Stones.get(i).get(0)-px(Stones.get(i).get(5))/2,Stones.get(i).get(1)-px(Stones.get(i).get(5))/2,px(Stones.get(i).get(5)),px(Stones.get(i).get(5)));
+      image(pImage[int(Stones.get(i).get(6))][int(Stones.get(i).get(4))],Stones.get(i).get(0)-px(Stones.get(i).get(5))/2,Stones.get(i).get(1)-px(Stones.get(i).get(5))/2,px(Stones.get(i).get(5)),px(Stones.get(i).get(5)));
     }
   }
 
@@ -387,6 +398,10 @@ void draw() {
   //printArray(backnum);
 
   time++;
+  if(time>200){
+    time=0;
+  }
+  //println(time);
   
 }
 
@@ -411,6 +426,11 @@ float test(){
       data+=Stones.get(i).get(4)+",";
   }
   data+=Stones.get(Stones.size()-1).get(4)+"\n";
+
+  for (int i=0; i<Stones.size()-1; i++) {
+      data+=Stones.get(i).get(6)+",";
+  }
+  data+=Stones.get(Stones.size()-1).get(6)+"\n";
   return data;
 }
 
@@ -458,6 +478,7 @@ if(tool==1||tool==3){
   Mouse.add(drawCount);//描画順
   Mouse.add(0.0);//選択チェック
   Mouse.add(-1.0);//石の種類
+  Mouse.add(-1.0);//石の種類2
   Mouses.add(Mouse);
   pick=-1;
 }

@@ -52,15 +52,40 @@ void UI() {
   //pattern
   noStroke();
   fill(0, 50);
-  rect(Px+Pw*selectCol, Py, Pw, Ph);
+  //rect(Px+Pw*selectP, Py, Pw, Ph);
+  rect(Px+Pw*selectCol, Py+Ph, Pw, Ph);
   //rect(Px+Pw*(selectCol%7), Py+Ph*int(selectCol/7), Pw, Ph);
   for (int j=0; j<1; j++) {
-    for (int i=0; i<14; i++) {
+    for (int i=0; i<6; i++) {
+      if(i==selectP){
+        stroke(0);
+      }else{
+        stroke(0,60);
+      }
+      if(i!=selectP){
+        tint( 255.0, 127 );
+      }else{
+        tint( 255.0, 255 );
+      }
       noFill();
-      stroke(0);
       rect(Px+Pw*i, Py+Ph*j, Pw, Ph);
       //pattern(Px+(Pw)*i+Pw/2, Py+(Ph)*j+Ph/2, Pw*0.7, COLOR, i+j*7);
-      image(pImage[i],Px+(Pw)*i+Pw/5, Py+(Ph)*j+Ph/5,Pw-8,Ph-8);
+      if(i==selectP){
+      image(pImage[i][selectCP[i]],Px+(Pw)*i+Pw/5, Py+(Ph)*j+Ph/5,Pw-10,Ph-10);
+      }else{
+        image(pImage[i][selectCP[i]],Px+(Pw)*i+Pw/5, Py+(Ph)*j+Ph/5,Pw-10,Ph-10);
+      }
+    }
+  }
+  tint( 255.0, 255 );
+
+  for (int j=0; j<1; j++) {
+    for (int i=0; i<11; i++) {
+      noFill();
+      stroke(0);
+      rect(Px+Pw*i, Py+Ph*j+Ph, Pw, Ph);
+      //pattern(Px+(Pw)*i+Pw/2, Py+(Ph)*j+Ph/2, Pw*0.7, COLOR, i+j*7);
+      image(pImage[selectP][i],Px+(Pw)*i+Pw/5, Py+(Ph)*j+Ph/5+Ph,Pw-10,Ph-10);
     }
   }
 
